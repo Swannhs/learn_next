@@ -16,6 +16,23 @@ export const getAllProducts = async (request, response) => {
     }
 }
 
+export const createProduct = async (request, response) => {
+    try {
+        const product = new Product(request.body);
+        await product.save();
+        response.status(201).json({
+            status: true,
+            message: 'Product created successfully',
+            product: product
+        })
+    } catch (error) {
+        response.status(500).json({
+            status: false,
+            message: 'Failed to create product'
+        })
+    }
+}
+
 export const getSingleProduct = async (request, response) => {
     try {
         const product = await Product.findById(request.query.id);

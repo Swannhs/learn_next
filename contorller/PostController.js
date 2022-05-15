@@ -17,6 +17,22 @@ export const getAllPosts = async (request, response) => {
     }
 }
 
+export const getSinglePostBySlug = async (request, response) => {
+    try {
+        const post = await Post.findOne({ slug: request.query.slug });
+        response.status(200).json({
+            status: true,
+            post: post
+        });
+    } catch (error) {
+        response.status(500).json({
+            status: false,
+            message: 'Fetching post failed',
+        });
+        console.error(error);
+    }
+}
+
 export const createPost = async (request, response) => {
     try {
         const post = await Post.create(request.body);
